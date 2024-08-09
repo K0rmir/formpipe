@@ -1,0 +1,146 @@
+{
+  "users": [
+    {
+      "name": "Alice",
+      "avatar": "alice.png",
+      "id": "fM8N0UQ",
+      "gender": "female",
+      "hair": "black",
+      "eyes": "brown",
+      "glasses": false,
+      "roles": ["1", "2"]
+    },
+    {
+      "name": "Bob",
+      "avatar": "bob.png",
+      "id": "l0m9GZr",
+      "gender": "male",
+      "hair": "blonde",
+      "eyes": "brown",
+      "glasses": false,
+      "roles": ["1", "3"]
+    },
+    {
+      "name": "Caitlin",
+      "avatar": "caitlin.png",
+      "id": "OFdykla",
+      "gender": "female",
+      "hair": "red",
+      "eyes": "blue",
+      "glasses": true,
+      "roles": ["1"]
+    },
+    {
+      "name": "Darius",
+      "avatar": "darius.png",
+      "id": "ICBeY3Q",
+      "gender": "male",
+      "hair": "black",
+      "eyes": "brown",
+      "glasses": false,
+      "roles": ["1", "3"]
+    },
+    {
+      "name": "Eve",
+      "avatar": "eve.png",
+      "id": "hm8HBaM",
+      "gender": "female",
+      "hair": "grey",
+      "eyes": "blue",
+      "glasses": false,
+      "roles": ["1"]
+    },
+    {
+      "name": "Fred",
+      "avatar": "fred.png",
+      "id": "igG4M_s",
+      "gender": "male",
+      "hair": "black",
+      "eyes": "brown",
+      "glasses": false,
+      "roles": ["1"]
+    },
+    {
+      "name": "Gary",
+      "avatar": "gary.png",
+      "id": "RFmjBth",
+      "gender": "male",
+      "hair": "blonde",
+      "eyes": "brown",
+      "glasses": true,
+      "roles": ["4"]
+    },
+    {
+      "name": "Hector",
+      "avatar": "hector.png",
+      "id": "60dHgKP",
+      "gender": "male",
+      "hair": "black",
+      "eyes": "brown",
+      "glasses": false,
+      "roles": ["1", "2"]
+    },
+    {
+      "name": "Ingrid",
+      "avatar": "ingrid.png",
+      "id": "Ignq9xP",
+      "gender": "female",
+      "hair": "black",
+      "eyes": "brown",
+      "glasses": false,
+      "roles": ["1", "2"]
+    },
+    {
+      "name": "Jenny",
+      "avatar": "jenny.png",
+      "id": "xlyoqyO",
+      "gender": "female",
+      "hair": "red",
+      "eyes": "blue",
+      "glasses": false,
+      "roles": ["1"]
+    },
+    {
+      "name": "Kat",
+      "avatar": "kat.png",
+      "id": "JD5ATQ6",
+      "gender": "female",
+      "hair": "grey",
+      "eyes": "blue",
+      "glasses": false,
+      "roles": ["4"]
+    },
+    {
+      "name": "Lisa",
+      "avatar": "lisa.png",
+      "id": "0EP2auX",
+      "gender": "female",
+      "hair": "black",
+      "eyes": "brown",
+      "glasses": false,
+      "roles": ["1"]
+    }
+  ],
+  "roles": [
+    {
+      "id": "1",
+      "name": "std",
+      "description": "Standard User"
+    },
+    {
+      "id": "2",
+      "name": "admin",
+      "description": "Administrator"
+    },
+    {
+      "id": "3",
+      "name": "super",
+      "description": "Super User"
+    },
+    {
+      "id": "4",
+      "name": "guest",
+      "description": "Guest User"
+    }
+  ]
+}
