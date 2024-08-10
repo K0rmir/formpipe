@@ -1,10 +1,7 @@
-import { useEffect, useState } from 'react';
 import {
   Button,
-  Card,
   Collapse,
   Group,
-  Image,
   Paper,
   Radio,
   Select,
@@ -13,20 +10,12 @@ import {
   Title,
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import { User } from '@/lib/interfaces.ts';
-
+import { UsersGrid } from '@/components/UsersGrid.tsx';
 /**
  * The UsersPage contacts the mock web server to fetch the list of users and displays them in a grid.
  */
 export function UsersPage() {
-  const [users, setUsers] = useState<User[]>([]);
   const [opened, { toggle }] = useDisclosure(false);
-
-  useEffect(() => {
-    fetch('http://localhost:3000/users')
-      .then((response) => response.json())
-      .then((data) => setUsers(data));
-  }, []);
 
   return (
     <>
@@ -65,29 +54,7 @@ export function UsersPage() {
         </Paper>
       </Collapse>
 
-      <Group miw={600}>
-        {users.map((user, index) => (
-          <Card radius={'md'} withBorder key={index} w={238}>
-            <Card.Section>
-              {/* We know where the images are, so we just grab the file based on the filename associated with the user */}
-              <Image src={`/uploads/${user.avatar}`} alt={`Avatar for ${user.name}`} />
-            </Card.Section>
-            <Title my={'md'} order={4}>
-              {user.name}
-            </Title>
-            <Button
-              size={'xs'}
-              fullWidth
-              variant={'outline'}
-              color={'grape'}
-              component={'a'}
-              href={`/users/view/${user.id}`}
-            >
-              View
-            </Button>
-          </Card>
-        ))}
-      </Group>
+      <UsersGrid />
     </>
   );
 }

@@ -11,3 +11,13 @@ export type User = {
 export type userRoles = {
     role: string;
 };
+
+export interface UsersContextState {
+    users: User[];
+    getUsers: () => void;
+}
+
+export const defaultUsersContextState: UsersContextState = {
+    users: [],
+    getUsers: () => { },
+};
