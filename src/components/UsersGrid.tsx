@@ -1,7 +1,6 @@
 import React from 'react';
 import { Button, Card, Group, Image, Title } from '@mantine/core';
 import { useUsersContext } from '../context/UsersContext';
-// import { UsersContextState } from '@/lib/interfaces.ts';
 
 export function UsersGrid() {
   const { users, getUsers } = useUsersContext();

@@ -11,6 +11,7 @@ import {
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { UsersGrid } from '@/components/UsersGrid.tsx';
+import { UsersTable } from '@/components/UsersTable.tsx';
 /**
  * The UsersPage contacts the mock web server to fetch the list of users and displays them in a grid.
  */
@@ -21,7 +22,7 @@ export function UsersPage() {
     <>
       <Title order={1}>Users</Title>
 
-      <Button my={'md'} onClick={toggle}>
+      <Button my={'md'} onClick={toggle} color="grape">
         {opened ? 'Hide filters' : 'Show Filters'}
       </Button>
 
@@ -54,7 +55,8 @@ export function UsersPage() {
         </Paper>
       </Collapse>
 
-      <UsersGrid />
+      <UsersTable />
+      {/* <UsersGrid /> */}
     </>
   );
 }
