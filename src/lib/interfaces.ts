@@ -1,3 +1,5 @@
+import { SetStateAction, Dispatch } from 'react';
+
 export type User = {
     id: string;
     name: string;
@@ -15,9 +17,13 @@ export type userRoles = {
 export interface UsersContextState {
     users: User[];
     getUsers: () => void;
+    usersTableView: boolean;
+    setUsersTableView: Dispatch<SetStateAction<boolean>>;
 }
 
 export const defaultUsersContextState: UsersContextState = {
     users: [],
     getUsers: () => { },
+    usersTableView: false,
+    setUsersTableView: () => { },
 };

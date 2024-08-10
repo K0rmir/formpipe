@@ -11,19 +11,30 @@ import {
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { UsersGrid } from '@/components/UsersGrid.tsx';
-/**
- * The UsersPage contacts the mock web server to fetch the list of users and displays them in a grid.
- */
+import { UsersTable } from '@/components/UsersTable.tsx';
+import { IconFilter, IconTable, IconLayout2 } from '@tabler/icons-react';
+import { useUsersContext } from '../context/UsersContext';
+
 export function UsersPage() {
+  const { usersTableView, setUsersTableView } = useUsersContext();
   const [opened, { toggle }] = useDisclosure(false);
 
   return (
     <>
-      <Title order={1}>Users</Title>
-
-      <Button my={'md'} onClick={toggle}>
-        {opened ? 'Hide filters' : 'Show Filters'}
-      </Button>
+      <Group>
+        <Title order={1}>Users</Title>
+        <Button my={'md'} onClick={toggle} color="grape" rightSection={<IconFilter size={18} />}>
+          {opened ? 'Hide filters' : 'Show Filters'}
+        </Button>
+        <Button
+          my={'md'}
+          onClick={() => setUsersTableView(!usersTableView)}
+          color="grape"
+          rightSection={usersTableView ? <IconLayout2 size={18} /> : <IconTable size={18} />}
+        >
+          {usersTableView ? 'Grid View' : 'Table View'}
+        </Button>
+      </Group>
 
       <Collapse in={opened}>
         <Paper shadow="sm" p={'lg'} mb="md" withBorder bg={'gray.1'} miw={600}>
@@ -54,7 +65,7 @@ export function UsersPage() {
         </Paper>
       </Collapse>
 
-      <UsersGrid />
+      {usersTableView ? <UsersTable /> : <UsersGrid />}
     </>
   );
 }
