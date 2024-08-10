@@ -1,6 +1,7 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { HomePage } from './pages/Home.page';
 import { UsersPage } from './pages/Users.page';
+import { UsersView } from './pages/UsersView.page';
 
 const router = createBrowserRouter([
   {
@@ -13,7 +14,7 @@ const router = createBrowserRouter([
   },
   {
     path: '/users/view/:id',
-    element: <p>Not yet implemented</p>,
+    element: <UsersView />,
   },
   {
     path: '/users/edit/:id',

@@ -13,7 +13,7 @@ export const Menu = () => (
     <Image p="xs" h={70} src={FormpipeLogo} alt="Formpipe Logo" />
     <Group ml="xl" gap={'lg'}>
       <MenuButton href="/">Home</MenuButton>
-      <MenuButton href="/users">List Users</MenuButton>
+      <MenuButton href="/users">Users</MenuButton>
     </Group>
   </Group>
 );
