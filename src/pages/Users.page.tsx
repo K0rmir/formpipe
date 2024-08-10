@@ -13,16 +13,7 @@ import {
   Title,
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-
-export type User = {
-  id: string;
-  name: string;
-  avatar: string;
-  gender: 'female' | 'male';
-  hair: 'black' | 'brown' | 'blonde' | 'red' | 'grey';
-  eyes: 'brown' | 'blue' | 'green';
-  glasses: boolean;
-};
+import { User } from '@/lib/interfaces.ts';
 
 /**
  * The UsersPage contacts the mock web server to fetch the list of users and displays them in a grid.
