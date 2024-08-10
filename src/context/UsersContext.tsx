@@ -1,10 +1,11 @@
-import React, { createContext, useState, useEffect, useContext } from 'react';
+import React, { createContext, useState, useContext } from 'react';
 import { User, UsersContextState, defaultUsersContextState } from '@/lib/interfaces.ts';
 
 const UsersContext = createContext<UsersContextState>(defaultUsersContextState);
 
 export default function UsersProvider({ children }: { children: React.ReactNode }) {
   const [users, setUsers] = useState<User[]>([]);
+  const [usersTableView, setUsersTableView] = useState<boolean>(false);
 
   // Get users for main userslist page grid/table components //
   function getUsers() {
@@ -18,6 +19,8 @@ export default function UsersProvider({ children }: { children: React.ReactNode 
       value={{
         users,
         getUsers,
+        usersTableView,
+        setUsersTableView,
       }}
     >
       {children}
