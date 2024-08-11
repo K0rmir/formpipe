@@ -1,17 +1,31 @@
 import React, { useEffect, useState } from 'react';
-import { Image, Table, NavLink, Group, Text, Button, Anchor } from '@mantine/core';
+import { Image, Table, NavLink, Group, Text, Button, Anchor, Pagination } from '@mantine/core';
 import { IconEye } from '@tabler/icons-react';
 import { useUsersContext } from '../context/UsersContext';
 
 export function UsersTable() {
-  const { users, getUsers } = useUsersContext();
-  const [active, setActive] = useState<number>();
+  const { users, getUsers } = useUsersContext(); // consume users from context
+  const [active, setActive] = useState<number>(); // state for index of current active row expansion
+  const [currentPage, setCurrentPage] = useState<number>(1); // active page for pagination, initialised at 1
+  const itemsPerPage: number = 5; // change this to drop down with options to choose from max users as state
 
   useEffect(() => {
     getUsers();
   }, []);
 
-  const rows = users.map((user, index) => (
+  const lastUserIndex = currentPage * itemsPerPage;
+  const firstUserIndex = lastUserIndex - itemsPerPage;
+  const currentUsers = users.slice(firstUserIndex, lastUserIndex);
+
+  const handlePageChange = (newPage: number) => {
+    setCurrentPage(newPage);
+  };
+
+  // Lines 16-22 > This implementation of pagination is fine for small datasets, however if working with a lot more data,
+  // having the data paginated directly from the API would be better.
+  // Values such as page num & users per page could be passed to api to fetch specific data
+
+  const rows = currentUsers.map((user, index) => (
     <Table.Tr key={user.name}>
       <Table.Td>
         <NavLink
@@ -80,11 +94,16 @@ export function UsersTable() {
           <Table.Tr>
             <Table.Th>Name</Table.Th>
             <Table.Th>Role</Table.Th>
-            {/* <Table.Th /> */}
           </Table.Tr>
         </Table.Thead>
         <Table.Tbody>{rows}</Table.Tbody>
       </Table>
+      <Pagination
+        total={Math.ceil(users.length / itemsPerPage)}
+        value={currentPage}
+        onChange={handlePageChange}
+        color="grape"
+      />
     </>
   );
 }
