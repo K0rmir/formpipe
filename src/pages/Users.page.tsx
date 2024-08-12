@@ -16,8 +16,25 @@ import { IconFilter, IconTable, IconLayout2 } from '@tabler/icons-react';
 import { useUsersContext } from '../context/UsersContext';
 
 export function UsersPage() {
-  const { usersTableView, setUsersTableView } = useUsersContext();
+  const { usersTableView, setUsersTableView, userFilters, setUserFilters } = useUsersContext();
   const [opened, { toggle }] = useDisclosure(false);
+
+  function handleFilterChange(name: string, value: string | null) {
+    setUserFilters((previousFilters) => {
+      if (name === 'glasses') {
+        return {
+          ...previousFilters,
+          glasses:
+            value === 'glasses' ? true : value === 'no-glasses' ? false : previousFilters.glasses,
+        };
+      } else {
+        return {
+          ...previousFilters,
+          [name]: value?.toLowerCase(),
+        };
+      }
+    });
+  }
 
   return (
     <>
@@ -40,21 +57,56 @@ export function UsersPage() {
         <Paper shadow="sm" p={'lg'} mb="md" withBorder bg={'gray.1'} miw={600}>
           <Stack gap={10}>
             <Group grow wrap={'wrap'}>
-              <TextInput label="Name" placeholder="Enter user's name to filter list" />
+              <TextInput
+                label="Name"
+                placeholder="Enter user's name to filter list"
+                name="name"
+                value={userFilters.name}
+                onChange={(e) => handleFilterChange('name', e.currentTarget.value)}
+              />
               <Select
                 label="Hair Colour"
-                placeholder="Pick value to filter list"
+                placeholder="Pick value"
                 data={['Black', 'Brown', 'Blonde', 'Red', 'Grey']}
+                name="hair"
+                value={userFilters.hair}
+                onChange={(value) => handleFilterChange('hair', value)}
+                checkIconPosition="left"
               />
               <Select
                 label="Eye Colour"
                 placeholder="Pick value"
                 data={['Brown', 'Blue', 'Green', 'Grey']}
+                name="eyes"
+                value={userFilters.eyes}
+                onChange={(value) => handleFilterChange('eyes', value)}
+                checkIconPosition="left"
               />
-              <Select label="Gender" placeholder="Pick value" data={['Male', 'Female']} />
+              <Select
+                label="Gender"
+                placeholder="Pick value"
+                data={['Male', 'Female']}
+                name="gender"
+                value={userFilters.gender}
+                onChange={(value) => handleFilterChange('gender', value)}
+                comboboxProps={{ transitionProps: { transition: 'pop', duration: 200 } }}
+                checkIconPosition="left"
+              />
             </Group>
 
-            <Radio.Group label="Glasses?" defaultValue="all">
+            <Radio.Group
+              label="Glasses?"
+              defaultValue="all"
+              name="glasses"
+              value={
+                userFilters.glasses === true
+                  ? 'glasses'
+                  : userFilters.glasses === false
+                    ? 'no-glasses'
+                    : 'all'
+              }
+              onChange={(value) => handleFilterChange('glasses', value)}
+            >
               <Group>
                 <Radio label="All" value="all" />
                 <Radio label="Glasses" value="glasses" />

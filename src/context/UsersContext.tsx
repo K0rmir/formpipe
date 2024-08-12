@@ -1,17 +1,60 @@
-import React, { createContext, useState, useContext } from 'react';
-import { User, UsersContextState, defaultUsersContextState } from '@/lib/interfaces.ts';
+import React, { createContext, useState, useContext, useEffect } from 'react';
+import {
+  User,
+  UsersContextState,
+  defaultUsersContextState,
+  UserFilters,
+} from '@/lib/interfaces.ts';
 
 const UsersContext = createContext<UsersContextState>(defaultUsersContextState);
 
 export default function UsersProvider({ children }: { children: React.ReactNode }) {
-  const [users, setUsers] = useState<User[]>([]);
-  const [usersTableView, setUsersTableView] = useState<boolean>(false);
+  const [users, setUsers] = useState<User[]>([]); // primary data to be consumed by application
+  const [usersTableView, setUsersTableView] = useState<boolean>(false); // switch for userrs grid/table view on users page
+  const [userFilters, setUserFilters] = useState<UserFilters>({
+    // Define filters state
+    name: '',
+    hair: '',
+    eyes: '',
+    gender: '',
+    glasses: null,
+    roles: [],
+  });
+
+  useEffect(() => {
+    getUsers();
+  }, [userFilters]);
+
+  // Build query string depending on filters //
+  function constructQueryString(filters: UserFilters) {
+    const queryParams = new URLSearchParams();
+
+    Object.entries(filters).forEach(([key, value]) => {
+      if (Array.isArray(value)) {
+        if (value.length > 0) {
+          queryParams.append(key, value.join(','));
+        }
+      } else if (typeof value === 'boolean') {
+        if (value) {
+          queryParams.append(key, String(value));
+        }
+      } else if (value) {
+        queryParams.append(key, String(value));
+      }
+    });
+    return queryParams.toString();
+  }
 
   // Get users for main userslist page grid/table components //
   function getUsers() {
-    fetch('http://localhost:3000/users')
+    const queryString = constructQueryString(userFilters);
+
+    console.log('Query String =', queryString);
+
+    fetch(`http://localhost:3000/users?${queryString}`)
       .then((response) => response.json())
       .then((data) => {
+        console.log('Data =', data);
         const userRoles = data.map((user: User) => ({
           ...user,
           roles: user.roles.map(getRoleDescriptions),
@@ -40,6 +83,8 @@ export default function UsersProvider({ children }: { children: React.ReactNode 
         getUsers,
         usersTableView,
         setUsersTableView,
+        userFilters,
+        setUserFilters,
       }}
     >
       {children}
