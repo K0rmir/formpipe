@@ -8,6 +8,7 @@ export type User = {
     hair: 'black' | 'brown' | 'blonde' | 'red' | 'grey';
     eyes: 'brown' | 'blue' | 'green';
     glasses: boolean;
+    roles: string[];
 };
 
 export type userRoles = {

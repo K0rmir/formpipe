@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Button, Card, Group, Image, Title } from '@mantine/core';
 import { useUsersContext } from '../context/UsersContext';
 
 export function UsersGrid() {
   const { users, getUsers } = useUsersContext();
 
-  getUsers();
+  useEffect(() => {
+    getUsers();
+  }, []);
 
   return (
     <>
