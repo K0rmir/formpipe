@@ -41,7 +41,7 @@ export const defaultUsersContextState: UsersContextState = {
         eyes: undefined,
         gender: undefined,
         glasses: undefined,
-        roles: [],
+        roles: undefined,
     },
     setUserFilters: () => { },
     defaultFilters: {
@@ -50,7 +50,7 @@ export const defaultUsersContextState: UsersContextState = {
         eyes: undefined,
         gender: undefined,
         glasses: undefined,
-        roles: [],
+        roles: undefined,
     },
     visible: false,
     open: () => { },

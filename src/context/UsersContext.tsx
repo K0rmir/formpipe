@@ -1,5 +1,4 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
 import {
   User,
   UsersContextState,
@@ -11,10 +10,10 @@ import { useDisclosure } from '@mantine/hooks';
 const UsersContext = createContext<UsersContextState>(defaultUsersContextState);
 
 export default function UsersProvider({ children }: { children: React.ReactNode }) {
-  const [users, setUsers] = useState<User[]>([]); // primary user data to be consumed by application
-  const [individualUser, setIndividualUser] = useState<User | undefined>();
-  const [usersTableView, setUsersTableView] = useState<boolean>(false); // switch for userrs grid/table view on users page
-  const [visible, { open, close }] = useDisclosure(false);
+  const [users, setUsers] = useState<User[]>([]); // group user data for table/grid view pages
+  const [individualUser, setIndividualUser] = useState<User | undefined>(); // individual user data for UsersView page
+  const [usersTableView, setUsersTableView] = useState<boolean>(false); // switch for users grid/table view on users page
+  const [visible, { open, close }] = useDisclosure(false); // switch for loading overlay on grid/table/UsersView
 
   const defaultFilters: UserFilters = {
     name: undefined,
@@ -24,6 +23,7 @@ export default function UsersProvider({ children }: { children: React.ReactNode 
     glasses: undefined,
     roles: [],
   };
+  // Set filters to values from session storage or default if none
   const [userFilters, setUserFilters] = useState<UserFilters>(() => {
     const savedFilters = sessionStorage.getItem('userFilters');
     return savedFilters ? JSON.parse(savedFilters) : defaultFilters;
@@ -38,12 +38,12 @@ export default function UsersProvider({ children }: { children: React.ReactNode 
     const queryParams = new URLSearchParams();
 
     Object.entries(filters).forEach(([key, value]) => {
-      if (Array.isArray(value)) {
-        if (value.length > 0) {
-          queryParams.append(key, value.join(',').toLowerCase());
+      if (value !== null && value !== undefined) {
+        if (key === 'roles') {
+          queryParams.append(`roles_like`, String(value));
+        } else {
+          queryParams.append(key, String(value).toLowerCase());
         }
-      } else if (value !== null && value !== undefined) {
-        queryParams.append(key, String(value).toLowerCase());
       }
     });
     return queryParams.toString();
@@ -55,6 +55,8 @@ export default function UsersProvider({ children }: { children: React.ReactNode 
     const queryParamString = `?${constructQueryString(userFilters)}`;
     const userIdQueryString = `/${userId}`;
     const queryFormat = userId ? userIdQueryString : queryParamString;
+
+    console.log('Query format =', queryFormat);
 
     fetch(`http://localhost:3000/users${queryFormat}`)
       .then((response) => response.json())
@@ -74,7 +76,7 @@ export default function UsersProvider({ children }: { children: React.ReactNode 
         close();
       });
   }
-
+  // Helper function to extract user roles //
   function getRoleDescriptions(role: string) {
     switch (role) {
       case '1':
