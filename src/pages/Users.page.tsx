@@ -10,13 +10,14 @@ import {
   Title,
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import { IconFilter, IconTable, IconLayout2 } from '@tabler/icons-react';
+import { IconFilter, IconTable, IconLayout2, IconFilterOff } from '@tabler/icons-react';
 import { UsersGrid } from '@/components/UsersGrid.tsx';
 import { UsersTable } from '@/components/UsersTable.tsx';
 import { useUsersContext } from '../context/UsersContext';
 
 export function UsersPage() {
-  const { usersTableView, setUsersTableView, userFilters, setUserFilters } = useUsersContext();
+  const { usersTableView, setUsersTableView, userFilters, setUserFilters, defaultFilters } =
+    useUsersContext();
   const [opened, { toggle }] = useDisclosure(false);
 
   function handleFilterChange(name: string, value: string | null) {
@@ -32,12 +33,17 @@ export function UsersPage() {
               [name]: value,
             };
       try {
-        localStorage.setItem('userFilters', JSON.stringify(updatedFilters));
+        sessionStorage.setItem('userFilters', JSON.stringify(updatedFilters));
       } catch (error) {
         console.error('Could not save filters to Local Storage:', error);
       }
       return updatedFilters;
     });
+  }
+
+  function handleClearUserFilters() {
+    setUserFilters(defaultFilters);
+    sessionStorage.removeItem('userFilters');
   }
 
   return (
@@ -65,7 +71,7 @@ export function UsersPage() {
                 label="Name"
                 placeholder="Enter user's name to filter list"
                 name="name"
-                value={userFilters.name}
+                value={userFilters.name || undefined}
                 onChange={(e) => handleFilterChange('name', e.currentTarget.value)}
               />
               <Select
@@ -73,28 +79,40 @@ export function UsersPage() {
                 placeholder="Pick value"
                 data={['Black', 'Brown', 'Blonde', 'Red', 'Grey']}
                 name="hair"
-                value={userFilters.hair}
+                value={userFilters.hair || undefined}
                 onChange={(value) => handleFilterChange('hair', value)}
                 checkIconPosition="left"
+                clearable
               />
               <Select
                 label="Eye Colour"
                 placeholder="Pick value"
                 data={['Brown', 'Blue', 'Green', 'Grey']}
                 name="eyes"
-                value={userFilters.eyes}
+                value={userFilters.eyes || undefined}
                 onChange={(value) => handleFilterChange('eyes', value)}
                 checkIconPosition="left"
+                clearable
               />
               <Select
                 label="Gender"
                 placeholder="Pick value"
                 data={['Male', 'Female']}
                 name="gender"
-                value={userFilters.gender}
+                value={userFilters.gender || undefined}
                 onChange={(value) => handleFilterChange('gender', value)}
-                comboboxProps={{ transitionProps: { transition: 'pop', duration: 200 } }}
                 checkIconPosition="left"
+                clearable
+              />
+              <Select
+                label="Role"
+                placeholder="Pick value"
+                data={['Guest User', 'Standard User', 'Super User', 'Administrator']}
+                name="role"
+                // value={userFilters.roles}
+                onChange={(value) => handleFilterChange('role', value)}
+                checkIconPosition="left"
+                clearable
               />
             </Group>
 
@@ -115,6 +133,15 @@ export function UsersPage() {
                 <Radio label="All" value="all" />
                 <Radio label="Glasses" value="glasses" />
                 <Radio label="No Glasses" value="no-glasses" />
+                <Button
+                  my={'md'}
+                  onClick={handleClearUserFilters}
+                  color="grape"
+                  rightSection={<IconFilterOff size={18} />}
+                  w={'150'}
+                >
+                  Clear Filters
+                </Button>
               </Group>
             </Radio.Group>
           </Stack>
