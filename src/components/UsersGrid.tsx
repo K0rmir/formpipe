@@ -1,33 +1,35 @@
 import React, { useEffect } from 'react';
-import { Button, Card, Group, Image, Title } from '@mantine/core';
+import { Button, Card, Group, Image, Title, Text, Paper, LoadingOverlay } from '@mantine/core';
 import { useUsersContext } from '../context/UsersContext';
 
 export function UsersGrid() {
-  const { users, getUsers } = useUsersContext();
+  const { users, getUsers, visible } = useUsersContext();
 
   useEffect(() => {
-    getUsers();
+    getUsers(null);
   }, []);
 
   return (
     <>
-      <Group miw={600}>
+      <Group miw={600} justify="flex-start" pos={'relative'}>
+        <LoadingOverlay visible={visible} zIndex={1000} overlayProps={{ radius: 'sm', blur: 2 }} />
         {users.map((user, index) => (
-          <Card radius={'md'} withBorder key={index} w={238}>
+          <Card radius={'md'} withBorder key={index} w={302} shadow="sm">
             <Card.Section>
-              {/* We know where the images are, so we just grab the file based on the filename associated with the user */}
               <Image src={`/uploads/${user.avatar}`} alt={`Avatar for ${user.name}`} />
             </Card.Section>
             <Title my={'md'} order={4}>
               {user.name}
             </Title>
+            <Text fw={500}>{user.roles.join(' & ')}</Text>
+
             <Button
               size={'xs'}
               fullWidth
               variant={'outline'}
               color={'grape'}
               component={'a'}
-              href={`/users/view/${user.id}`}
+              href={`/users/${user.id}`}
             >
               View
             </Button>

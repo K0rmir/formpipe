@@ -10,13 +10,14 @@ import {
   Paper,
   Select,
   Stack,
+  LoadingOverlay,
 } from '@mantine/core';
 import { IconEye, IconArrowUp, IconArrowDown } from '@tabler/icons-react';
 import { User } from '@/lib/interfaces.ts';
 import { useUsersContext } from '../context/UsersContext';
 
 export function UsersTable() {
-  const { users, getUsers } = useUsersContext(); // consume users from context
+  const { users, getUsers, visible } = useUsersContext(); // consume users from context
   // Component specific state //
   const [active, setActive] = useState<number>(); // state for index of current active row expansion
   const [currentPage, setCurrentPage] = useState<number>(1); // active page for pagination, initialised at 1
@@ -25,7 +26,7 @@ export function UsersTable() {
   const [usersPerPage, setUsersPerPage] = useState<string>('5');
 
   useEffect(() => {
-    getUsers();
+    getUsers(null);
   }, []);
 
   function sortUsers(usersToSort: User[], field: keyof User, direction: 'asc' | 'desc') {
@@ -126,7 +127,7 @@ export function UsersTable() {
                 radius="md"
                 rightSection={<IconEye size={20} />}
                 component="a"
-                href={`/users/view/${user.id}`}
+                href={`/users/${user.id}`}
               >
                 View User
               </Button>
@@ -140,12 +141,14 @@ export function UsersTable() {
 
   return (
     <>
-      <Paper shadow="xl" radius="md" p="xl">
+      <Paper shadow="xl" radius="md" p="xl" pos={'relative'}>
+        <LoadingOverlay visible={visible} zIndex={1000} overlayProps={{ radius: 'sm', blur: 2 }} />
         <Group justify="center">
           <Table horizontalSpacing="xl">
             <Table.Thead>
               <Table.Tr>
                 <SortableTableHeader field="name">Name</SortableTableHeader>
+                {/* <SortableTableHeader field="name">Role</SortableTableHeader> */}
                 <Table.Th>Role</Table.Th> {/* on click function here for sorting*/}
               </Table.Tr>
             </Table.Thead>

@@ -1,7 +1,7 @@
 import { SetStateAction, Dispatch } from 'react';
 
 export type User = {
-    id: string;
+    id: string | null;
     name: string;
     avatar: string;
     gender: 'female' | 'male';
@@ -17,16 +17,22 @@ export type userRoles = {
 
 export interface UsersContextState {
     users: User[];
-    getUsers: () => void;
+    getUsers: (id: string | null) => void;
+    individualUser: User | undefined;
     usersTableView: boolean;
     setUsersTableView: Dispatch<SetStateAction<boolean>>;
     userFilters: UserFilters;
     setUserFilters: Dispatch<SetStateAction<UserFilters>>
+    defaultFilters: UserFilters,
+    visible: boolean,
+    open: () => void;
+    close: () => void;
 }
 
 export const defaultUsersContextState: UsersContextState = {
     users: [],
     getUsers: () => { },
+    individualUser: undefined,
     usersTableView: false,
     setUsersTableView: () => { },
     userFilters: {
@@ -34,10 +40,21 @@ export const defaultUsersContextState: UsersContextState = {
         hair: undefined,
         eyes: undefined,
         gender: undefined,
-        glasses: null,
+        glasses: undefined,
         roles: [],
     },
     setUserFilters: () => { },
+    defaultFilters: {
+        name: undefined,
+        hair: undefined,
+        eyes: undefined,
+        gender: undefined,
+        glasses: undefined,
+        roles: [],
+    },
+    visible: false,
+    open: () => { },
+    close: () => { },
 };
 
 export interface UserFilters {
@@ -45,6 +62,6 @@ export interface UserFilters {
     hair?: string,
     eyes?: string,
     gender?: string,
-    glasses?: boolean | null,
+    glasses?: boolean,
     roles?: string[],
 }
