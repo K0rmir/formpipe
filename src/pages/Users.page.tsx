@@ -11,6 +11,7 @@ import {
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { IconFilter, IconTable, IconLayout2, IconFilterOff } from '@tabler/icons-react';
+// import { UserFilters } from '@/lib/interfaces.ts';
 import { UsersGrid } from '@/components/UsersGrid.tsx';
 import { UsersTable } from '@/components/UsersTable.tsx';
 import { useUsersContext } from '../context/UsersContext';
@@ -22,16 +23,15 @@ export function UsersPage() {
 
   function handleFilterChange(name: string, value: string | null) {
     setUserFilters((previousFilters) => {
-      const updatedFilters =
-        name === 'glasses'
-          ? {
-              ...previousFilters,
-              glasses: value === 'glasses' ? true : value === 'no-glasses' ? false : null,
-            }
-          : {
-              ...previousFilters,
-              [name]: value,
-            };
+      const updatedFilters = {
+        ...previousFilters,
+        [name]: value,
+      };
+
+      if (name === 'glasses') {
+        updatedFilters.glasses = value === 'glasses' ? true : value === 'no-glasses' ? false : null;
+      }
+
       try {
         sessionStorage.setItem('userFilters', JSON.stringify(updatedFilters));
       } catch (error) {
@@ -107,10 +107,15 @@ export function UsersPage() {
               <Select
                 label="Role"
                 placeholder="Pick value"
-                data={['Guest User', 'Standard User', 'Super User', 'Administrator']}
-                name="role"
-                // value={userFilters.roles}
-                onChange={(value) => handleFilterChange('role', value)}
+                data={[
+                  { value: '1', label: 'Standard User' },
+                  { value: '2', label: 'Administrator' },
+                  { value: '3', label: 'Super User' },
+                  { value: '4', label: 'Guest User' },
+                ]}
+                name="roles"
+                value={userFilters.roles || undefined}
+                onChange={(value) => handleFilterChange('roles', value)}
                 checkIconPosition="left"
                 clearable
               />
