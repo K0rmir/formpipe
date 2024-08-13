@@ -30,21 +30,21 @@ export const defaultUsersContextState: UsersContextState = {
     usersTableView: false,
     setUsersTableView: () => { },
     userFilters: {
-        name: '',
-        hair: '',
-        eyes: '',
-        gender: '',
-        glasses: false,
+        name: undefined,
+        hair: undefined,
+        eyes: undefined,
+        gender: undefined,
+        glasses: null,
         roles: [],
     },
     setUserFilters: () => { },
 };
 
 export interface UserFilters {
-    name: string | undefined,
-    hair: string | undefined,
-    eyes: string | undefined,
-    gender: string | undefined,
-    glasses: boolean | string | null | undefined,
-    roles: string[] | undefined,
+    name?: string,
+    hair?: string,
+    eyes?: string,
+    gender?: string,
+    glasses?: boolean | null,
+    roles?: string[],
 }

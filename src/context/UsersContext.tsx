@@ -11,14 +11,18 @@ const UsersContext = createContext<UsersContextState>(defaultUsersContextState);
 export default function UsersProvider({ children }: { children: React.ReactNode }) {
   const [users, setUsers] = useState<User[]>([]); // primary data to be consumed by application
   const [usersTableView, setUsersTableView] = useState<boolean>(false); // switch for userrs grid/table view on users page
-  const [userFilters, setUserFilters] = useState<UserFilters>({
-    // Define filters state
-    name: '',
-    hair: '',
-    eyes: '',
-    gender: '',
-    glasses: null,
-    roles: [],
+  const [userFilters, setUserFilters] = useState<UserFilters>(() => {
+    const savedFilters = localStorage.getItem('userFilters');
+    return savedFilters
+      ? JSON.parse(savedFilters)
+      : {
+          name: undefined,
+          hair: undefined,
+          eyes: undefined,
+          gender: undefined,
+          glasses: null,
+          roles: [],
+        };
   });
 
   useEffect(() => {
@@ -32,14 +36,10 @@ export default function UsersProvider({ children }: { children: React.ReactNode 
     Object.entries(filters).forEach(([key, value]) => {
       if (Array.isArray(value)) {
         if (value.length > 0) {
-          queryParams.append(key, value.join(','));
+          queryParams.append(key, value.join(',').toLowerCase());
         }
-      } else if (typeof value === 'boolean') {
-        if (value) {
-          queryParams.append(key, String(value));
-        }
-      } else if (value) {
-        queryParams.append(key, String(value));
+      } else if (value !== null && value !== undefined) {
+        queryParams.append(key, String(value).toLowerCase());
       }
     });
     return queryParams.toString();

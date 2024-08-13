@@ -10,9 +10,9 @@ import {
   Title,
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
+import { IconFilter, IconTable, IconLayout2 } from '@tabler/icons-react';
 import { UsersGrid } from '@/components/UsersGrid.tsx';
 import { UsersTable } from '@/components/UsersTable.tsx';
-import { IconFilter, IconTable, IconLayout2 } from '@tabler/icons-react';
 import { useUsersContext } from '../context/UsersContext';
 
 export function UsersPage() {
@@ -21,18 +21,22 @@ export function UsersPage() {
 
   function handleFilterChange(name: string, value: string | null) {
     setUserFilters((previousFilters) => {
-      if (name === 'glasses') {
-        return {
-          ...previousFilters,
-          glasses:
-            value === 'glasses' ? true : value === 'no-glasses' ? false : previousFilters.glasses,
-        };
-      } else {
-        return {
-          ...previousFilters,
-          [name]: value?.toLowerCase(),
-        };
+      const updatedFilters =
+        name === 'glasses'
+          ? {
+              ...previousFilters,
+              glasses: value === 'glasses' ? true : value === 'no-glasses' ? false : null,
+            }
+          : {
+              ...previousFilters,
+              [name]: value,
+            };
+      try {
+        localStorage.setItem('userFilters', JSON.stringify(updatedFilters));
+      } catch (error) {
+        console.error('Could not save filters to Local Storage:', error);
       }
+      return updatedFilters;
     });
   }
 
