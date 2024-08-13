@@ -159,7 +159,6 @@ export function UsersTable() {
             <Stack>
               <Select
                 label="Users per page"
-                // placeholder="Items per page"
                 data={['5', '10', '15']}
                 defaultValue={'5'}
                 value={usersPerPage}

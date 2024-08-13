@@ -20,6 +20,8 @@ export interface UsersContextState {
     getUsers: () => void;
     usersTableView: boolean;
     setUsersTableView: Dispatch<SetStateAction<boolean>>;
+    userFilters: UserFilters;
+    setUserFilters: Dispatch<SetStateAction<UserFilters>>
 }
 
 export const defaultUsersContextState: UsersContextState = {
@@ -27,4 +29,22 @@ export const defaultUsersContextState: UsersContextState = {
     getUsers: () => { },
     usersTableView: false,
     setUsersTableView: () => { },
+    userFilters: {
+        name: undefined,
+        hair: undefined,
+        eyes: undefined,
+        gender: undefined,
+        glasses: null,
+        roles: [],
+    },
+    setUserFilters: () => { },
 };
+
+export interface UserFilters {
+    name?: string,
+    hair?: string,
+    eyes?: string,
+    gender?: string,
+    glasses?: boolean | null,
+    roles?: string[],
+}
