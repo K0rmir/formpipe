@@ -14,6 +14,7 @@ export default function UsersProvider({ children }: { children: React.ReactNode 
   const [individualUser, setIndividualUser] = useState<User | undefined>(); // individual user data for UsersView page
   const [usersTableView, setUsersTableView] = useState<boolean>(false); // switch for users grid/table view on users page
   const [visible, { open, close }] = useDisclosure(false); // switch for loading overlay on grid/table/UsersView
+  const [isFiltersOpen, setIsFiltersOpen] = useState<boolean>(false); // switch for toggling filters drop down in UsersPage
 
   const defaultFilters: UserFilters = {
     name: undefined,
@@ -21,7 +22,7 @@ export default function UsersProvider({ children }: { children: React.ReactNode 
     eyes: undefined,
     gender: undefined,
     glasses: undefined,
-    roles: [],
+    roles: undefined,
   };
   // Set filters to values from session storage or default if none
   const [userFilters, setUserFilters] = useState<UserFilters>(() => {
@@ -104,6 +105,8 @@ export default function UsersProvider({ children }: { children: React.ReactNode 
         visible,
         open,
         close,
+        isFiltersOpen,
+        setIsFiltersOpen,
       }}
     >
       {children}
