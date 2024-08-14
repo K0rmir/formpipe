@@ -87,40 +87,40 @@ export function UsersTable() {
           color="grape"
           onClick={() => setActive(index)}
         >
-          <Table.Td>
-            <Group justify="center">
-              <Text tt="capitalize">
-                <Text component="span" fw={700}>
-                  Gender:{' '}
-                </Text>
-                {user.gender}
+          <Group justify="center">
+            <Text tt="capitalize">
+              <Text component="span" fw={700}>
+                Gender:{' '}
               </Text>
-              <Text tt="capitalize">
-                <Text component="span" fw={700}>
-                  Hair Colour:{' '}
-                </Text>
-                {user.hair}
+              {user.gender}
+            </Text>
+            <Text tt="capitalize">
+              <Text component="span" fw={700}>
+                Hair Colour:{' '}
               </Text>
-              <Text tt="capitalize">
-                <Text component="span" fw={700}>
-                  Eye Colour:{' '}
-                </Text>
-                {user.eyes}
+              {user.hair}
+            </Text>
+            <Text tt="capitalize">
+              <Text component="span" fw={700}>
+                Eye Colour:{' '}
               </Text>
-              <Text tt="capitalize">
-                <Text component="span" fw={700}>
-                  Glasses:{' '}
-                </Text>
-                {user ? (user.glasses ? 'Yes' : 'No') : 'Loading...'}
+              {user.eyes}
+            </Text>
+            <Text tt="capitalize">
+              <Text component="span" fw={700}>
+                Glasses:{' '}
               </Text>
-              <Image
-                h={100}
-                w={100}
-                radius={'75%'}
-                mr={75}
-                src={`/uploads/${user.avatar}`}
-                alt={`Avatar for ${user.name}`}
-              />
+              {user ? (user.glasses ? 'Yes' : 'No') : 'Loading...'}
+            </Text>
+            <Image
+              h={100}
+              w={100}
+              radius={'75%'}
+              mr={75}
+              src={`/uploads/${user.avatar}`}
+              alt={`Avatar for ${user.name}`}
+            />
+            <Group>
               <Button
                 variant="light"
                 color="grape"
@@ -146,7 +146,7 @@ export function UsersTable() {
                 </Button>
               </Tooltip>
             </Group>
-          </Table.Td>
+          </Group>
         </NavLink>
       </Table.Td>
       <Table.Td>{user.roles.join(' & ')}</Table.Td>
@@ -162,11 +162,12 @@ export function UsersTable() {
             <Table.Thead>
               <Table.Tr>
                 <SortableTableHeader field="name">Name</SortableTableHeader>
-                {/* <SortableTableHeader field="name">Role</SortableTableHeader> */}
-                <Table.Th>Role</Table.Th> {/* on click function here for sorting*/}
+                <Table.Th>Role</Table.Th>
               </Table.Tr>
             </Table.Thead>
-            <Table.Tbody>{rows}</Table.Tbody>
+            <Table.Tbody>
+              <>{rows}</>
+            </Table.Tbody>
           </Table>
           <Pagination.Root
             total={Math.ceil(users.length / parseInt(usersPerPage, 10))}
