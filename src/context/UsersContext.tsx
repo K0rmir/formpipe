@@ -57,25 +57,27 @@ export default function UsersProvider({ children }: { children: React.ReactNode 
     const userIdQueryString = `/${userId}`;
     const queryFormat = userId ? userIdQueryString : queryParamString;
 
-    console.log('Query format =', queryFormat);
-
-    fetch(`http://localhost:3000/users${queryFormat}`)
-      .then((response) => response.json())
-      .then((data) => {
-        if (userId) {
-          setIndividualUser({
-            ...data,
-            roles: data.roles.map(getRoleDescriptions),
-          });
-        } else {
-          const userRoles = data.map((user: User) => ({
-            ...user,
-            roles: user.roles.map(getRoleDescriptions),
-          }));
-          setUsers(userRoles);
-        }
-        close();
-      });
+    try {
+      fetch(`http://localhost:3000/users${queryFormat}`)
+        .then((response) => response.json())
+        .then((data) => {
+          if (userId) {
+            setIndividualUser({
+              ...data,
+              roles: data.roles.map(getRoleDescriptions),
+            });
+          } else {
+            const userRoles = data.map((user: User) => ({
+              ...user,
+              roles: user.roles.map(getRoleDescriptions),
+            }));
+            setUsers(userRoles);
+          }
+          close();
+        });
+    } catch (error) {
+      console.error('Could not fetch user data', error);
+    }
   }
   // Helper function to extract user roles //
   function getRoleDescriptions(role: string) {

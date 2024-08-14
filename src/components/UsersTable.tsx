@@ -11,8 +11,9 @@ import {
   Select,
   Stack,
   LoadingOverlay,
+  Tooltip,
 } from '@mantine/core';
-import { IconEye, IconArrowUp, IconArrowDown } from '@tabler/icons-react';
+import { IconEye, IconArrowUp, IconArrowDown, IconEdit } from '@tabler/icons-react';
 import { User } from '@/lib/interfaces.ts';
 import { useUsersContext } from '../context/UsersContext';
 
@@ -72,7 +73,7 @@ export function UsersTable() {
   const firstUserIndex = lastUserIndex - parseInt(usersPerPage, 10);
   const currentUsers = sortedUsers.slice(firstUserIndex, lastUserIndex);
 
-  // Lines 50-56 > This implementation of pagination is fine for small datasets, however if working with a lot more data,
+  // Lines 65-73 > This implementation of pagination is fine for small datasets, however if working with a lot more data,
   // having the data paginated directly from the API would be better.
   // Values such as page num & users per page could be passed directly to api to fetch specific page data
 
@@ -131,6 +132,19 @@ export function UsersTable() {
               >
                 View User
               </Button>
+              <Tooltip label="Currently Unavailable">
+                <Button
+                  variant="light"
+                  color="grape"
+                  size="md"
+                  radius="md"
+                  rightSection={<IconEdit size={20} />}
+                  component="a"
+                  disabled
+                >
+                  Edit User
+                </Button>
+              </Tooltip>
             </Group>
           </Table.Td>
         </NavLink>

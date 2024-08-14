@@ -1,4 +1,4 @@
-import { Button, Group, Image } from '@mantine/core';
+import { Button, Group, Image, Anchor } from '@mantine/core';
 import React, { FC, ReactNode } from 'react';
 import FormpipeLogo from '../assets/formpipe-logo.svg';
 import { IconHome, IconUsers } from '@tabler/icons-react';
@@ -8,15 +8,18 @@ const MenuButton: FC<{
   children: ReactNode;
   leftSection?: ReactNode;
   logo?: ReactNode;
-}> = ({ href, children, leftSection, logo }) => (
-  <Button color={'grape'} component={'a'} variant="subtle" href={href} leftSection={logo}>
+}> = ({ href, children, leftSection }) => (
+  <Button color={'grape'} component={'a'} variant="subtle" href={href} leftSection={leftSection}>
     {children}
   </Button>
 );
 
 export const Menu = () => (
   <Group justify="space-between" px={'lg'}>
-    <Image p="xs" h={70} src={FormpipeLogo} alt="Formpipe Logo" />
+    <Anchor href="/">
+      <Image p="xs" h={70} src={FormpipeLogo} alt="Formpipe Logo" />
+    </Anchor>
+    {/* <Image p="xs" h={70} src={FormpipeLogo} alt="Formpipe Logo" /> */}
     <Group ml="xl" gap={'lg'}>
       <MenuButton href="/" leftSection={<IconHome />}>
         Home

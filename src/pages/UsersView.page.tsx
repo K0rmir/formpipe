@@ -1,11 +1,22 @@
-import { useEffect, useState } from 'react';
-import { Title, Text, Group, Stack, Image, Paper, LoadingOverlay, Skeleton } from '@mantine/core';
+import { useEffect } from 'react';
+import {
+  Title,
+  Text,
+  Group,
+  Stack,
+  Image,
+  Paper,
+  LoadingOverlay,
+  Skeleton,
+  Tooltip,
+  Button,
+} from '@mantine/core';
+import { IconEdit } from '@tabler/icons-react';
 import { useParams } from 'react-router-dom';
-import { User, userRoles } from '@/lib/interfaces.ts';
 import { useUsersContext } from '../context/UsersContext';
 
 export function UsersView() {
-  const { visible, open, close, individualUser, getUsers } = useUsersContext();
+  const { visible, individualUser, getUsers } = useUsersContext();
   const userId: string | undefined = useParams().id;
 
   useEffect(() => {
@@ -77,6 +88,19 @@ export function UsersView() {
           ) : (
             <Skeleton height={275} width={205} />
           )}
+          <Tooltip label="Currently Unavailable">
+            <Button
+              variant="light"
+              color="grape"
+              size="md"
+              radius="md"
+              rightSection={<IconEdit size={20} />}
+              component="a"
+              disabled
+            >
+              Edit User
+            </Button>
+          </Tooltip>
         </Group>
       </Paper>
     </div>
