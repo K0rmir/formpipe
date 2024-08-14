@@ -1,7 +1,7 @@
 import { SetStateAction, Dispatch } from 'react';
 
 export type User = {
-    id: string | null;
+    id: string;
     name: string;
     avatar: string;
     gender: 'female' | 'male';
@@ -27,6 +27,8 @@ export interface UsersContextState {
     visible: boolean,
     open: () => void;
     close: () => void;
+    isFiltersOpen: boolean;
+    setIsFiltersOpen: Dispatch<SetStateAction<boolean>>;
 }
 
 export const defaultUsersContextState: UsersContextState = {
@@ -55,6 +57,8 @@ export const defaultUsersContextState: UsersContextState = {
     visible: false,
     open: () => { },
     close: () => { },
+    isFiltersOpen: false,
+    setIsFiltersOpen: () => { },
 };
 
 export interface UserFilters {
@@ -62,6 +66,6 @@ export interface UserFilters {
     hair?: string,
     eyes?: string,
     gender?: string,
-    glasses?: boolean,
-    roles?: string[],
+    glasses?: boolean | null,
+    roles?: string
 }
