@@ -1,4 +1,4 @@
-import React, { useEffect, useState, FC, ReactNode } from 'react';
+import { useState, FC, ReactNode } from 'react';
 import {
   Image,
   Table,
@@ -18,17 +18,13 @@ import { User } from '@/lib/interfaces.ts';
 import { useUsersContext } from '../context/UsersContext';
 
 export function UsersTable() {
-  const { users, getUsers, visible } = useUsersContext();
+  const { users, visible } = useUsersContext();
   // Component specific state //
   const [active, setActive] = useState<number>(); // state for index of current active row expansion
   const [currentPage, setCurrentPage] = useState<number>(1); // active page for pagination, initialised at 1
   const [sortField, setSortField] = useState<keyof User>('name');
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc');
   const [usersPerPage, setUsersPerPage] = useState<string>('5');
-
-  useEffect(() => {
-    getUsers(null);
-  }, []);
 
   function sortUsers(usersToSort: User[], field: keyof User, direction: 'asc' | 'desc') {
     return [...users].sort((a, b) => {

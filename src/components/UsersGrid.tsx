@@ -1,13 +1,8 @@
-import React, { useEffect } from 'react';
 import { Button, Card, Group, Image, Title, Text, Paper, LoadingOverlay } from '@mantine/core';
 import { useUsersContext } from '../context/UsersContext';
 
 export function UsersGrid() {
-  const { users, getUsers, visible } = useUsersContext();
-
-  useEffect(() => {
-    getUsers(null);
-  }, []);
+  const { users, visible } = useUsersContext();
 
   return (
     <>
