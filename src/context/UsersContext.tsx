@@ -31,7 +31,6 @@ export default function UsersProvider({ children }: { children: React.ReactNode 
   });
 
   useEffect(() => {
-    console.log('Hello from Context useEffect where we get the userdata!');
     getUsers(null);
   }, [userFilters]);
 

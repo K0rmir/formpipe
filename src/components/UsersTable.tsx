@@ -14,11 +14,9 @@ import {
   Tooltip,
 } from '@mantine/core';
 import { IconEye, IconArrowUp, IconArrowDown, IconEdit } from '@tabler/icons-react';
-import { User } from '@/lib/interfaces.ts';
-import { useUsersContext } from '../context/UsersContext';
+import { User, UserProps } from '@/lib/interfaces.ts';
 
-export function UsersTable() {
-  const { users, visible } = useUsersContext();
+export function UsersTable({ users, visible }: UserProps) {
   // Component specific state //
   const [active, setActive] = useState<number>(); // state for index of current active row expansion
   const [currentPage, setCurrentPage] = useState<number>(1); // active page for pagination, initialised at 1

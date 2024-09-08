@@ -69,3 +69,8 @@ export interface UserFilters {
     glasses?: boolean | null,
     roles?: string
 }
+
+export interface UserProps {
+    users: User[];
+    visible: boolean | undefined
+}

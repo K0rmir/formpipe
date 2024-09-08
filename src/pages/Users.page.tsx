@@ -6,7 +6,8 @@ import { UsersFilters } from '@/components/UsersFilters.tsx';
 import { useUsersContext } from '../context/UsersContext';
 
 export function UsersPage() {
-  const { usersTableView, setUsersTableView, isFiltersOpen, setIsFiltersOpen } = useUsersContext();
+  const { usersTableView, setUsersTableView, isFiltersOpen, setIsFiltersOpen, users, visible } =
+    useUsersContext();
 
   return (
     <>
@@ -31,7 +32,11 @@ export function UsersPage() {
       </Group>
 
       {isFiltersOpen && <UsersFilters />}
-      {usersTableView ? <UsersTable /> : <UsersGrid />}
+      {usersTableView ? (
+        <UsersTable users={users} visible={visible} />
+      ) : (
+        <UsersGrid users={users} visible={visible} />
+      )}
     </>
   );
 }
