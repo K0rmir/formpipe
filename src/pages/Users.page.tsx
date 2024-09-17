@@ -3,11 +3,11 @@ import { IconFilter, IconTable, IconLayout2, IconFilterOff } from '@tabler/icons
 import { UsersGrid } from '@/components/UsersGrid.tsx';
 import { UsersTable } from '@/components/UsersTable.tsx';
 import { UsersFilters } from '@/components/UsersFilters.tsx';
-import { useUsersContext } from '../context/UsersContext';
+import { useUsersStore } from '../store/usersStore';
 
 export function UsersPage() {
-  const { usersTableView, setUsersTableView, isFiltersOpen, setIsFiltersOpen, users, visible } =
-    useUsersContext();
+  const { users, isFiltersOpen, setIsFiltersOpen, usersTableView, setUsersTableView, visible } =
+    useUsersStore();
 
   return (
     <>

@@ -1,5 +1,3 @@
-import { SetStateAction, Dispatch } from 'react';
-
 export type User = {
     id: string;
     name: string;
@@ -15,51 +13,23 @@ export type userRoles = {
     role: string;
 };
 
-export interface UsersContextState {
+export interface UsersStoreState {
     users: User[];
-    getUsers: (id: string | null) => void;
     individualUser: User | undefined;
     usersTableView: boolean;
-    setUsersTableView: Dispatch<SetStateAction<boolean>>;
+    visible: boolean;
+    isFiltersOpen: boolean;
     userFilters: UserFilters;
-    setUserFilters: Dispatch<SetStateAction<UserFilters>>
-    defaultFilters: UserFilters,
-    visible: boolean,
+    defaultFilters: UserFilters;
+    setUsers: (users: User[]) => void;
+    setIndividualUser: (user: User | undefined) => void;
+    setUsersTableView: (view: boolean) => void;
+    setUserFilters: (filters: UserFilters) => void;
+    setIsFiltersOpen: (isOpen: boolean) => void;
+    getUsers: (id: string | null) => void;
     open: () => void;
     close: () => void;
-    isFiltersOpen: boolean;
-    setIsFiltersOpen: Dispatch<SetStateAction<boolean>>;
 }
-
-export const defaultUsersContextState: UsersContextState = {
-    users: [],
-    getUsers: () => { },
-    individualUser: undefined,
-    usersTableView: false,
-    setUsersTableView: () => { },
-    userFilters: {
-        name: undefined,
-        hair: undefined,
-        eyes: undefined,
-        gender: undefined,
-        glasses: undefined,
-        roles: undefined,
-    },
-    setUserFilters: () => { },
-    defaultFilters: {
-        name: undefined,
-        hair: undefined,
-        eyes: undefined,
-        gender: undefined,
-        glasses: undefined,
-        roles: undefined,
-    },
-    visible: false,
-    open: () => { },
-    close: () => { },
-    isFiltersOpen: false,
-    setIsFiltersOpen: () => { },
-};
 
 export interface UserFilters {
     name?: string,

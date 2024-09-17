@@ -13,10 +13,11 @@ import {
 } from '@mantine/core';
 import { IconEdit } from '@tabler/icons-react';
 import { useParams } from 'react-router-dom';
-import { useUsersContext } from '../context/UsersContext';
+import { useUsersStore } from '@/store/usersStore';
 
 export function UsersView() {
-  const { visible, individualUser, getUsers } = useUsersContext();
+  const { visible, individualUser, getUsers } = useUsersStore();
+
   const userId: string | undefined = useParams().id;
 
   useEffect(() => {

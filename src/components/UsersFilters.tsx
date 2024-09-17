@@ -1,10 +1,10 @@
 import { Button, Collapse, Group, Paper, Radio, Select, Stack, TextInput } from '@mantine/core';
 import { IconFilterOff } from '@tabler/icons-react';
-import { useUsersContext } from '../context/UsersContext';
+import { useUsersStore } from '@/store/usersStore';
 import { UserFilters } from '@/lib/interfaces.ts';
 
 export function UsersFilters() {
-  const { userFilters, setUserFilters, defaultFilters, isFiltersOpen } = useUsersContext();
+  const { userFilters, setUserFilters, defaultFilters, isFiltersOpen } = useUsersStore();
 
   function handleFilterChange(name: string, value: string | null) {
     setUserFilters((previousFilters) => {
