@@ -7,23 +7,26 @@ export function UsersFilters() {
   const { userFilters, setUserFilters, defaultFilters, isFiltersOpen } = useUsersStore();
 
   function handleFilterChange(name: string, value: string | null) {
-    setUserFilters((previousFilters) => {
-      const updatedFilters: UserFilters = {
-        ...previousFilters,
-        [name]: value,
-      };
+    console.log('User Filters Function updated!');
 
-      if (name === 'glasses') {
-        updatedFilters.glasses = value === 'glasses' ? true : value === 'no-glasses' ? false : null;
-      }
+    const currentFilters = useUsersStore.getState().userFilters;
 
-      try {
-        sessionStorage.setItem('userFilters', JSON.stringify(updatedFilters));
-      } catch (error) {
-        console.error('Could not save filters to Local Storage:', error);
-      }
-      return updatedFilters;
-    });
+    const updatedFilters: UserFilters = {
+      ...currentFilters,
+      [name]: value,
+    };
+
+    if (name === 'glasses') {
+      updatedFilters.glasses = value === 'glasses' ? true : value === 'no-glasses' ? false : null;
+    }
+
+    try {
+      sessionStorage.setItem('userFilters', JSON.stringify(updatedFilters));
+    } catch (error) {
+      console.error('Could not save filters to Local Storage:', error);
+    }
+
+    setUserFilters(updatedFilters);
   }
 
   function handleClearUserFilters() {

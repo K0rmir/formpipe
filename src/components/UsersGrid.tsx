@@ -1,7 +1,10 @@
-import { Button, Card, Group, Image, Title, Text, Paper, LoadingOverlay } from '@mantine/core';
-import { UserProps } from '../lib/interfaces.ts';
+import { Button, Card, Group, Image, Title, Text, LoadingOverlay } from '@mantine/core';
+import { useUsersStore } from '../store/usersStore';
+import { User, UserProps } from '@/lib/interfaces.ts';
 
 export function UsersGrid({ users, visible }: UserProps) {
+  const { getUsers, userFilters } = useUsersStore();
+
   return (
     <>
       <Group miw={600} justify="flex-start" pos={'relative'}>

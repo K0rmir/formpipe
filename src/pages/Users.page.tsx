@@ -1,13 +1,28 @@
 import { Button, Group, Title } from '@mantine/core';
-import { IconFilter, IconTable, IconLayout2, IconFilterOff } from '@tabler/icons-react';
+import { IconFilter, IconTable, IconLayout2 } from '@tabler/icons-react';
 import { UsersGrid } from '@/components/UsersGrid.tsx';
 import { UsersTable } from '@/components/UsersTable.tsx';
 import { UsersFilters } from '@/components/UsersFilters.tsx';
 import { useUsersStore } from '../store/usersStore';
+import { useEffect } from 'react';
 
 export function UsersPage() {
-  const { users, isFiltersOpen, setIsFiltersOpen, usersTableView, setUsersTableView, visible } =
-    useUsersStore();
+  const {
+    users,
+    getUsers,
+    userFilters,
+    visible,
+    isFiltersOpen,
+    setIsFiltersOpen,
+    usersTableView,
+    setUsersTableView,
+  } = useUsersStore();
+
+  useEffect(() => {
+    getUsers(null);
+  }, [userFilters]);
+
+  console.log('Hello from Users Page');
 
   return (
     <>

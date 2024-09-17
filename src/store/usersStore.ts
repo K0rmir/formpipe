@@ -4,7 +4,7 @@ import {
   UserFilters,
   UsersStoreState
 } from '../lib/interfaces.ts';
-// import { useDisclosure } from '@mantine/hooks';
+
 
 const defaultFilters: UserFilters = {
   name: undefined,
@@ -15,12 +15,12 @@ const defaultFilters: UserFilters = {
   roles: undefined,
 };
 
-export const useUsersStore = create<UsersStoreState>((set) => {
+export const useUsersStore = create<UsersStoreState>((set, sub) => {
   const open = () => set({ visible: true });
   const close = () => set({ visible: false });
 
   const fetchUsers = (id: string | null) => {
-    console.log("hello there!")
+    console.log("Fetching Users!")
     open();
     const constructQueryString = (filters: UserFilters) => {
       const queryParams = new URLSearchParams();
@@ -73,7 +73,6 @@ export const useUsersStore = create<UsersStoreState>((set) => {
     isFiltersOpen: false,
     userFilters: JSON.parse(sessionStorage.getItem('userFilters') || JSON.stringify(defaultFilters)),
     defaultFilters: defaultFilters,
-
     setUsers: (users: User[]) => set({ users }),
     setIndividualUser: (user: User | undefined) => set({ individualUser: user }),
     setUsersTableView: (view: boolean) => set({ usersTableView: view }),
@@ -82,10 +81,8 @@ export const useUsersStore = create<UsersStoreState>((set) => {
       set({ userFilters: filters });
     },
     setIsFiltersOpen: (isOpen: boolean) => set({ isFiltersOpen: isOpen }),
-
     open,
     close,
-
     getUsers: fetchUsers
   };
 });

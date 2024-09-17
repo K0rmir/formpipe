@@ -28,6 +28,8 @@ export function UsersView() {
 
   const userRoles = individualUser?.roles.join(' & ') || 'Loading...';
 
+  console.log('hello from users view page!');
+
   return (
     <div
       style={{
