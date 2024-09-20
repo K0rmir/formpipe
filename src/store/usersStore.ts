@@ -16,12 +16,9 @@ const defaultFilters: UserFilters = {
 };
 
 export const useUsersStore = create<UsersStoreState>((set) => {
-  const open = () => set({ visible: true });
-  const close = () => set({ visible: false });
-
   const fetchUsers = (id: string | null) => {
     console.log("Fetching Users!")
-    open();
+    set({ visible: true });
     const constructQueryString = (filters: UserFilters) => {
       const queryParams = new URLSearchParams();
       Object.entries(filters).forEach(([key, value]) => {
@@ -57,11 +54,13 @@ export const useUsersStore = create<UsersStoreState>((set) => {
           }));
           set({ users: userRoles });
         }
-        close();
+        set({ visible: false });
       })
-      .catch((error) => console.error('Could not fetch user data', error));
-    close();
-  }
+      .catch((error) => {
+        console.error('Could not fetch user data', error)
+        set({ visible: false });
+      });
+  };
 
   fetchUsers(null);
 
