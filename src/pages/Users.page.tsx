@@ -4,25 +4,12 @@ import { UsersGrid } from '@/components/UsersGrid.tsx';
 import { UsersTable } from '@/components/UsersTable.tsx';
 import { UsersFilters } from '@/components/UsersFilters.tsx';
 import { useUsersStore } from '../store/usersStore';
-import { useEffect } from 'react';
 
 export function UsersPage() {
-  const {
-    users,
-    getUsers,
-    userFilters,
-    visible,
-    isFiltersOpen,
-    setIsFiltersOpen,
-    usersTableView,
-    setUsersTableView,
-  } = useUsersStore();
-
-  useEffect(() => {
-    getUsers(null);
-  }, [userFilters]);
-
-  console.log('Hello from Users Page');
+  const isFiltersOpen = useUsersStore((state) => state.isFiltersOpen);
+  const setIsFiltersOpen = useUsersStore((state) => state.setIsFiltersOpen);
+  const usersTableView = useUsersStore((state) => state.usersTableView);
+  const setUsersTableView = useUsersStore((state) => state.setUsersTableView);
 
   return (
     <>
@@ -47,11 +34,7 @@ export function UsersPage() {
       </Group>
 
       {isFiltersOpen && <UsersFilters />}
-      {usersTableView ? (
-        <UsersTable users={users} visible={visible} />
-      ) : (
-        <UsersGrid users={users} visible={visible} />
-      )}
+      {usersTableView ? <UsersTable /> : <UsersGrid />}
     </>
   );
 }

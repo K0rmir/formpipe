@@ -1,9 +1,10 @@
 import { Button, Card, Group, Image, Title, Text, LoadingOverlay } from '@mantine/core';
 import { useUsersStore } from '../store/usersStore';
-import { User, UserProps } from '@/lib/interfaces.ts';
+// import { User, UserProps } from '@/lib/interfaces.ts';
 
-export function UsersGrid({ users, visible }: UserProps) {
-  const { getUsers, userFilters } = useUsersStore();
+export function UsersGrid() {
+  const users = useUsersStore((state) => state.users);
+  const visible = useUsersStore((state) => state.visible);
 
   return (
     <>

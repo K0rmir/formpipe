@@ -16,7 +16,10 @@ import { useParams } from 'react-router-dom';
 import { useUsersStore } from '@/store/usersStore';
 
 export function UsersView() {
-  const { visible, individualUser, getUsers } = useUsersStore();
+  const { getUsers } = useUsersStore();
+
+  const individualUser = useUsersStore((state) => state.individualUser);
+  const visible = useUsersStore((state) => state.visible);
 
   const userId: string | undefined = useParams().id;
 
@@ -28,7 +31,7 @@ export function UsersView() {
 
   const userRoles = individualUser?.roles.join(' & ') || 'Loading...';
 
-  console.log('hello from users view page!');
+  console.log('Users View Page Trigger!');
 
   return (
     <div

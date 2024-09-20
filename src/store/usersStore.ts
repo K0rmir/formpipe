@@ -15,7 +15,7 @@ const defaultFilters: UserFilters = {
   roles: undefined,
 };
 
-export const useUsersStore = create<UsersStoreState>((set, sub) => {
+export const useUsersStore = create<UsersStoreState>((set) => {
   const open = () => set({ visible: true });
   const close = () => set({ visible: false });
 

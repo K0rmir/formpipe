@@ -4,11 +4,14 @@ import { useUsersStore } from '@/store/usersStore';
 import { UserFilters } from '@/lib/interfaces.ts';
 
 export function UsersFilters() {
-  const { userFilters, setUserFilters, defaultFilters, isFiltersOpen } = useUsersStore();
+  const userFilters = useUsersStore((state) => state.userFilters);
+  const setUserFilters = useUsersStore((state) => state.setUserFilters);
+  const defaultFilters = useUsersStore((state) => state.defaultFilters);
+  const isFiltersOpen = useUsersStore((state) => state.isFiltersOpen);
+  const getUsers = useUsersStore((state) => state.getUsers);
 
+  // Update user filters from on click values //
   function handleFilterChange(name: string, value: string | null) {
-    console.log('User Filters Function updated!');
-
     const currentFilters = useUsersStore.getState().userFilters;
 
     const updatedFilters: UserFilters = {
@@ -27,11 +30,14 @@ export function UsersFilters() {
     }
 
     setUserFilters(updatedFilters);
+    getUsers(null);
   }
 
+  // Clear User Filters from Session Storage //
   function handleClearUserFilters() {
     setUserFilters(defaultFilters);
     sessionStorage.removeItem('userFilters');
+    getUsers(null);
   }
 
   return (
