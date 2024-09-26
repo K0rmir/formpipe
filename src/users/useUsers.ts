@@ -13,6 +13,9 @@ export function useUsers() {
   return useQuery({ queryKey: ['users'], queryFn: fetchUsers });
 }
 
+// Todo: implement roles function
+// Todo: implement filter function
+// Todo: create new custom hook for fetching individual user data with userid passed as param 
 
 
 
