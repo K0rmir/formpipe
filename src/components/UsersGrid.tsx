@@ -1,17 +1,18 @@
 import { Button, Card, Group, Image, Title, Text, LoadingOverlay } from '@mantine/core';
 import { useUsersStore } from '../store/usersStore';
+import { useUsers } from '@/users/useUsers';
 
 export function UsersGrid() {
-  const users = useUsersStore((state) => state.users);
-  const visible = useUsersStore((state) => state.visible);
+  // const users = useUsersStore((state) => state.users);
+  const visible = useUsersStore((state) => state.visible); // visible state from Zustand
 
-  console.log('Users Grid Visible = ', visible);
+  const { data: users, isLoading, error } = useUsers();
 
   return (
     <>
       <Group miw={600} justify="flex-start" pos={'relative'}>
         <LoadingOverlay visible={visible} zIndex={1000} overlayProps={{ radius: 'sm', blur: 2 }} />
-        {users.map((user, index) => (
+        {users?.map((user, index) => (
           <Card radius={'md'} withBorder key={index} w={302} shadow="sm">
             <Card.Section>
               <Image src={`/uploads/${user.avatar}`} alt={`Avatar for ${user.name}`} />

@@ -19,7 +19,7 @@ import { User } from '@/lib/interfaces.ts';
 
 export function UsersTable() {
   const users = useUsersStore((state) => state.users);
-  const visible = useUsersStore((state) => state.visible);
+  const visible = useUsersStore((state) => state.visible); // visible state from Zustand
 
   // Component specific state //
   const [active, setActive] = useState<number>(); // state for index of current active row expansion

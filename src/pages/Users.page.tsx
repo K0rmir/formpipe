@@ -6,6 +6,8 @@ import { UsersFilters } from '@/components/UsersFilters.tsx';
 import { useUsersStore } from '../store/usersStore';
 
 export function UsersPage() {
+  console.log('Users Page Render!');
+
   const isFiltersOpen = useUsersStore((state) => state.isFiltersOpen);
   const setIsFiltersOpen = useUsersStore((state) => state.setIsFiltersOpen);
   const usersTableView = useUsersStore((state) => state.usersTableView);

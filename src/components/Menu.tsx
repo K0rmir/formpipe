@@ -19,7 +19,6 @@ export const Menu = () => (
     <Anchor href="/">
       <Image p="xs" h={70} src={FormpipeLogo} alt="Formpipe Logo" />
     </Anchor>
-    {/* <Image p="xs" h={70} src={FormpipeLogo} alt="Formpipe Logo" /> */}
     <Group ml="xl" gap={'lg'}>
       <MenuButton href="/" leftSection={<IconHome />}>
         Home

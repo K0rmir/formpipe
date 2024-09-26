@@ -80,8 +80,6 @@ export const useUsersStore = create<UsersStoreState>((set) => {
       set({ userFilters: filters });
     },
     setIsFiltersOpen: (isOpen: boolean) => set({ isFiltersOpen: isOpen }),
-    open,
-    close,
     getUsers: fetchUsers
   };
 });
