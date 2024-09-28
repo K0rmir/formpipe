@@ -1,12 +1,17 @@
 import { Button, Card, Group, Image, Title, Text, LoadingOverlay } from '@mantine/core';
 import { useUsersStore } from '../store/usersStore';
-import { useUsers } from '@/users/useUsers';
+import { fetchUsers } from '@/users/useUsers';
+import { UserFilters } from '../lib/interfaces.ts';
+import { useQuery } from '@tanstack/react-query';
 
 export function UsersGrid() {
-  // const users = useUsersStore((state) => state.users);
   const visible = useUsersStore((state) => state.visible); // visible state from Zustand
+  const userFilters: UserFilters = useUsersStore((state) => state.userFilters); // userFilters from Zustand
 
-  const { data: users, isLoading, error } = useUsers();
+  const { data: users, isLoading } = useQuery({
+    queryKey: ['users', userFilters],
+    queryFn: () => fetchUsers(userFilters),
+  });
 
   return (
     <>

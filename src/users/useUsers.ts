@@ -1,23 +1,13 @@
-import { useQuery } from '@tanstack/react-query';
 import {
   User,
   UserFilters,
 } from '../lib/interfaces.ts';
 
-const defaultFilters: UserFilters = {
-  name: undefined,
-  hair: undefined,
-  eyes: undefined,
-  gender: undefined,
-  glasses: undefined,
-  roles: undefined,
-};
-
-async function fetchUsers() {
+export async function fetchUsers(userFilters: UserFilters) {
   console.log("Fetching users from Tanstack custom Hook!")
   // LoadingOverlay true //
   let userRoles;
-  const queryParamString = `?${constructQueryString(JSON.parse(sessionStorage.getItem('userFilters') || JSON.stringify(defaultFilters)))}`; // This should be staying the same and just transferred over to fetchUsers func in useUsers
+  const queryParamString = `?${constructQueryString(userFilters)}`; // This should be staying the same and just transferred over to fetchUsers func in useUsers
 
   await fetch(`http://localhost:3000/users${queryParamString}`)
     .then((response) => response.json())
@@ -28,7 +18,7 @@ async function fetchUsers() {
       }));
     })
   // Loading Overlay false //
-  return userRoles;
+  return userRoles; // <-- This is what is returned by the Tanstack Query Function to be mapped over in component
 }
 
 // Helper function to construct query string //
@@ -60,12 +50,6 @@ function getRoleDescriptions(role: string) {
   }
 };
 
-// fetch all users custom hook //
-export function useUsers() {
-  return useQuery({ queryKey: ['users'], queryFn: fetchUsers });
-}
-
-// Todo: implement filter function
 // Todo: create new custom hook for fetching individual user data with userid passed as param 
 
 
