@@ -11,7 +11,8 @@ export function UsersGrid() {
   return (
     <>
       <Group miw={600} justify="flex-start" pos={'relative'}>
-        <LoadingOverlay visible={visible} zIndex={1000} overlayProps={{ radius: 'sm', blur: 2 }} />
+        {isLoading && <LoadingOverlay />}
+        {/* <LoadingOverlay visible={visible} zIndex={1000} overlayProps={{ radius: 'sm', blur: 2 }} /> */}
         {users?.map((user, index) => (
           <Card radius={'md'} withBorder key={index} w={302} shadow="sm">
             <Card.Section>
